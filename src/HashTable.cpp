@@ -20,9 +20,8 @@ int HashTable::search(std::string key) {
     int index = hash(key);
 
     for (int i = 0; i < 26; i++) {
-        if (table[index].key == key) {
-            return index;
-        }
+        if (table[index].key == key) return index;
+
         switch (table[index].state) {
             case NeverUsed:
                 return -1;
@@ -43,7 +42,6 @@ void HashTable::insert(std::string key) {
             if (table[index].state != Occupied) {
                 table[index].state = Occupied;
                 table[index].key = key;
-                std::cout << table[index].key << std::endl;
                 return;
             } else {
                 index++;
@@ -54,8 +52,5 @@ void HashTable::insert(std::string key) {
 }
 
 void HashTable::del(std::string key) {
-    if (search(key) != -1) {
-        int index = hash(key);
-        table[index].state = Tombstone;
-    }
+    if (search(key) != -1) table[hash(key)].state = Tombstone;
 }
