@@ -1,33 +1,30 @@
 #include <iostream>
+#include <sstream>
 
 #include "HashTable.h"
 #include "Slot.h"
 
 int main() {
     HashTable hashTable;
-    for (int i = 0; i < 26; i++) {
-        Slot s = hashTable.table[i];
-        std::cout << s.hashValue << " " << s.key << " " << s.state << std::endl;
+    std::string input;
+    getline(std::cin, input);
+    std::stringstream stream(input);
+    while (stream.good()) {
+        std::string token;
+        stream >> token;
+        switch (token[0]) {
+            case 'A':
+                hashTable.insert(token.substr(1));
+                break;
+            case 'D':
+                hashTable.del(token.substr(1));
+        }
     }
-    hashTable.insert("hello");
-    for (int i = 0; i < 26; i++) {
-        Slot s = hashTable.table[i];
-        std::cout << s.hashValue << " " << s.key << " " << s.state << std::endl;
+
+    for (Slot s : hashTable.table) {
+        if (s.state == Occupied) std::cout << s.hashValue << ":" << s.key << " ";
     }
-    hashTable.insert("jello");
-    for (int i = 0; i < 26; i++) {
-        Slot s = hashTable.table[i];
-        std::cout << s.hashValue << " " << s.key << " " << s.state << std::endl;
-    }
-    hashTable.del("hello");
-    for (int i = 0; i < 26; i++) {
-        Slot s = hashTable.table[i];
-        std::cout << s.hashValue << " " << s.key << " " << s.state << std::endl;
-    }
-    hashTable.insert("wello");
-    for (int i = 0; i < 26; i++) {
-        Slot s = hashTable.table[i];
-        std::cout << s.hashValue << " " << s.key << " " << s.state << std::endl;
-    }
+    std::cout << std::endl;
+
     return 0;
 }
