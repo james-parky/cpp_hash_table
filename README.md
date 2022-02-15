@@ -1,1 +1,1 @@
-/> g++ -std=c++14 -Iinclude std/*.cpp
+/> g++ -std=c++14 -Iinclude src/*.cpp
